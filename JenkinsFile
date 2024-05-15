@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        EMAIL_RECIPIENT = 'amithtiwari222@gmail.com'
+    }
 
     stages {
         stage('Build') {
@@ -17,7 +20,7 @@ pipeline {
              post {
                 always {
                     emailext (
-                        to: 'amithtiwaribackup@gmail.com',
+                        to: "${env.EMAIL_RECIPIENT}",
                         subject: "${env.JOB_NAME} - Test Stage ${currentBuild.result}",
                         body: "The test stage has finished with status: ${currentBuild.result}",
                         attachLog: true
@@ -43,7 +46,7 @@ pipeline {
             post {
                 always {
                     emailext (
-                        to: 'amithtiwaribackup@gmail.com',
+                        to: "${env.EMAIL_RECIPIENT}",
                         subject: "${env.JOB_NAME} - Security Scan Stage ${currentBuild.result}",
                         body: "The security scan stage has finished with status: ${currentBuild.result}",
                         attachLog: true
